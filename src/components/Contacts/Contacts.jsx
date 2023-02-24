@@ -1,15 +1,17 @@
+import PropTypes from 'prop-types';
+import { ContactEl, ContactsList } from './Contacts.styled';
 export function Contacts({ state, deleteContact }) {
   return (
     <>
       <h2>Contacts</h2>
-      <ul>
+      <ContactsList>
         {state.contacts.map(e => {
           if (!e.name.toLowerCase().includes(state.filter)) {
             return null;
           }
 
           return (
-            <li key={e.id}>
+            <ContactEl key={e.id}>
               <p>
                 {e.name}: {e.number}
               </p>
@@ -21,10 +23,19 @@ export function Contacts({ state, deleteContact }) {
               >
                 Delete
               </button>
-            </li>
+            </ContactEl>
           );
         })}
-      </ul>
+      </ContactsList>
     </>
   );
 }
+Contacts.propTypes = {
+  state: PropTypes.shape({
+    contacts: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ),
+  }),
+};

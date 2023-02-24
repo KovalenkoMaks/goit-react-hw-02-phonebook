@@ -1,4 +1,5 @@
 import { Formik, Field } from 'formik';
+import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 
 import { FormEl } from './NameInput.styled';
@@ -26,12 +27,19 @@ export function NameInput({ addstate, state }) {
         <FormEl>
           <label htmlFor="name">
             Name
-            <Field type="text" name="name" placeholder="Name" />
+            <Field
+              type="text"
+              name="name"
+              placeholder="Name"
+              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+              required
+            />
           </label>
           <label htmlFor="number">
             Number
             <Field
-              type="number"
+              type="tel"
               name="number"
               placeholder="Number"
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -46,3 +54,15 @@ export function NameInput({ addstate, state }) {
     </>
   );
 }
+
+NameInput.propTypes = {
+  state: PropTypes.shape({
+    contacts: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        id: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
+      })
+    ),
+  }),
+};
